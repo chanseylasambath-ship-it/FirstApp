@@ -11,25 +11,21 @@ def print_hi(name):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('David Sambath; welcome to Python World')
+    print_hi('David Sambath; welcome to Python World!')
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 
 
-x_1 = 19
-y = int(3.25)
-z = "Hello"
-print(type(x_1))
-print(type(y))
-print(type(z))
+## The For Loops
+## Loop through list
+fruits = ["apple", "banana", "cherry"]
+for x in fruits:
+    print(x)
 
-print(random.randrange(y, x_1))
-
-for x in "Seyladavid":
-  print(str(x))
-
-txt = "The best things in life is knowledge and freedown"
-if "life" not in txt:
-  print(txt[-22:-13])
-else:
-  print(txt[4:])
+## Loop with range() Function
+for x in range(4):        #output will start with 0 value
+    print(x)
+for x in range(1,4):        #ignore start with 0 value
+    print(x)
+for x in range(1,10, 2):       #adding 3rd parameter will increment by 2
+    print(x)
