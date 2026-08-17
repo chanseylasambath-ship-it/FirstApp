@@ -1,31 +1,39 @@
-# This is a sample Python script.
+def main():
+    """
+    Main entry point.
+    """
+    try:
+        base_dir = Path(__file__).resolve().parent.parent
+        config_file = base_dir / "settings.ini"
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import random
+        config = load_config(config_file)
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+        log_file = config["GENERAL"]["log_file"]
+        setup_logger(log_file)
 
+    except Exception as exc:
+        print(f"Startup error: {exc}")
+        return
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('David Sambath; welcome to Python World!')
+    for section in config.sections():
+        if section.upper() == "GENERAL":
+            continue
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+        try:
+            if "process_folder" not in config[section]:
+                LOGGER.error(
+                    "Missing 'process_folder' in section [%s]",
+                    section
+                )
+                continue
 
+            process_folder = config[section]["process_folder"]
 
-## The For Loops
-## Loop through list
-fruits = ["apple", "banana", "cherry"]
-for x in fruits:
-    print(x)
+            delete_zero_byte_files(process_folder)
 
-## Loop with range() Function
-for x in range(4):        #output will start with 0 value
-    print(x)
-for x in range(1,4):        #ignore start with 0 value
-    print(x)
-for x in range(1,10, 2):       #adding 3rd parameter will increment by 2
-    print(x)
+        except Exception as exc:
+            LOGGER.error(
+                "Error processing section [%s]: %s",
+                section,
+                exc
+            )
