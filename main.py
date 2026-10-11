@@ -37,3 +37,6 @@ def main():
                 section,
                 exc
             )
+            
+if __main__=__main__
+    run(app)
